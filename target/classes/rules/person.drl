@@ -1,0 +1,14 @@
+package rules
+
+import com.my.model.Person;
+
+salience 1
+rule test001
+
+when
+    $p:Person(name=="张三",age==30);
+then
+    $p.setName("李四");
+    System.out.println("改完后的名字"+$p.getName());
+    update($p)
+end

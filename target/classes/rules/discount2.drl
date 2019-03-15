@@ -1,0 +1,36 @@
+import com.my.model.Order;
+import com.my.model.Product;
+
+
+
+rule "deduction2"
+	salience 3
+    when
+    	$order : Order();
+    	$product : Product(price>=3000 && id in (1) ) from $order.products;//从list中取出每个product
+    then
+    	$product.setDeduction(150);//产品单价超过1000，减50元
+    	System.out.println($product.toString());
+end
+
+
+rule "deduction1"
+	salience 2
+    when
+    	$order : Order();
+    	$product : Product(price>=2000 && price<3000 && id in (1) ) from $order.products;//从list中取出每个product
+    then
+    	$product.setDeduction(80);//产品单价超过1000，减50元
+    	System.out.println($product.toString());
+end
+
+
+rule "deduction"
+	salience 1
+    when
+    	$order : Order();
+    	$product : Product(price>=1000 && price<2000  && id in (1) ) from $order.products;//从list中取出每个product
+    then
+    	$product.setDeduction(30);//产品单价超过1000，减50元
+    	System.out.println($product.toString());
+end

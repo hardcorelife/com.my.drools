@@ -1,0 +1,20 @@
+package rules
+
+import com.my.model.Person;
+
+rule "hello"
+
+when
+    $person: Person(name == "Bob",age < 100)
+then
+    $person.setName("神马");
+    System.out.println("你大爷" + $person.getName() + "还年轻着呢！年纪");
+end
+
+rule hello2
+
+when
+    person :  Person(name == "神马")
+then
+     System.out.println("又是你大爷：" + person.getName() + "我");
+end

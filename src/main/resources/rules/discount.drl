@@ -1,0 +1,44 @@
+import com.my.model.Order;
+import com.my.model.Product;
+
+
+rule "products2"
+    date-effective "2019-03-14 11:18:00" //当前日期不小于2009-09-25时可以执行(含2009-09-25) 注意修改时间格式
+    date-expires "2019-03-14 11:33:00" //当前日期大于2009-09-30时可以执行(不含2009-09-30) 注意修改时间格式
+	salience 4
+    when
+    	$order : Order();
+    	$product : Product(count <= 5 && count >3 && id  not in (1)) from $order.products;//从list中取出每个product
+    then
+    	$product.setDiscount(0.8);//产品数量超过2个，则该产品打85折
+    	System.out.println($product.toString());
+end
+
+rule "products1"
+	salience 3
+    when
+    	$order : Order();
+    	$product : Product(count <= 3 && count >2 && id  not in (1)) from $order.products;//从list中取出每个product
+    then
+    	$product.setDiscount(0.85);//产品数量超过2个，则该产品打85折
+    	System.out.println($product.toString());
+end
+
+rule "products"
+	salience 2
+    when
+    	$order : Order();
+    	$product : Product(count==2 && id not in (1)) from $order.products;//从list中取出每个product
+    then
+    	$product.setDiscount(0.9);//产品数量超过2个，则该产品打9折
+    	System.out.println($product.toString());
+end
+
+rule "order"
+	salience 1
+    when
+    	order:Order(getTotal() > 1000);
+    then
+         System.out.println("订单：总价钱超过1000，立减50");
+    	order.setCash(50);//总价钱超过1000，立减50
+end

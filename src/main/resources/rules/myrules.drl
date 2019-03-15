@@ -3,6 +3,8 @@ package rules
 import com.my.model.Address;
 import com.my.model.AddressCheckResult;
 
+import function com.my.function.Utility.helper
+
 global java.util.List myGlobalList;
 
 function String hello1(String name) {
@@ -17,10 +19,12 @@ lock-on-active
         address : Address(postcode != null, postcode matches "([0-9]{5})")
         checkResult : AddressCheckResult();
     then
+        helper(drools);
         checkResult.setPostCodeResult(true);
          myGlobalList.add( "myrules.drl-1");
         System.out.println("规则中打印日志：校验通过!");
-        System.out.println(hello("myrules.drl-1"));
+        System.out.println(hello1("myrules.drl-1"));
+
 end
 
 rule "2017myrules.drl-2"
@@ -28,7 +32,9 @@ rule "2017myrules.drl-2"
         address : Address(postcode != null, postcode matches "([0-9]{5})")
         checkResult : AddressCheckResult();
     then
+        helper(drools);
         checkResult.setPostCodeResult(true);
-         myGlobalList.add( "2017myrules.drl-2" );
-        System.out.println("规则中打印日志：校验通过2017!");
+        myGlobalList.add( "2017myrules.drl-2" );
+        System.out.println("规则中打印日志：校验通过2017xxx!");
+
 end
